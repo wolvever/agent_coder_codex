@@ -34,3 +34,14 @@ class TestTool(Tool):
                                                      stderr=subprocess.STDOUT)
         out, _ = await proc.communicate()
         return out.decode()
+
+
+class EchoTool(Tool):
+    """Simple tool that echoes the instruction."""
+
+    def __init__(self):
+        super().__init__(name="echo", description="Echo instruction")
+
+    async def run(self, instruction: str, sandbox: Path) -> str:
+        return instruction
+
