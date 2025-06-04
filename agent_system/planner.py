@@ -1,16 +1,18 @@
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import List, Optional
 
 from .events import Message, ToolUse, FinishAction
+from .input import UserInput
+from .sandbox import Sandbox
+from .tools import Tool
 
 @dataclass
 class PlanningContext:
     session_id: str
-    user_query: str
+    user_input: UserInput
     chat_history: List[Message]
-    tools: List[str]
-    sandbox: Path
+    tools: List[Tool]
+    sandbox: Sandbox
     instruction: str
     searched_chunks: Optional[str] = None
 
@@ -25,6 +27,6 @@ class Planner:
 
 class EchoPlanner(Planner):
     async def plan(self, ctx: PlanningContext) -> PlannerStep:
-        content = f"Echo: {ctx.user_query}"
+        content = f"Echo: {ctx.user_input.text}"
         return PlannerStep(messages=[Message(role="assistant", content=content)],
                            actions=[FinishAction(result=content)])

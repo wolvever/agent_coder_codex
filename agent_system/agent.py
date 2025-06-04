@@ -5,23 +5,27 @@ from typing import List, Optional
 
 from .events import Message, ToolUse, FinishAction
 from .planner import Planner, PlanningContext, PlannerStep
+from .sandbox import Sandbox
+from .tools import Tool
+from .input import UserInput
 
 @dataclass
 class Session:
     session_id: str
     chat_history: List[Message] = field(default_factory=list)
-    sandbox: Path = Path("./sandbox")
+    sandbox: Sandbox = field(default_factory=lambda: Sandbox(Path("./sandbox")))
 
 class Agent:
-    def __init__(self, planner: Planner):
+    def __init__(self, planner: Planner, tools: Optional[List[Tool]] = None):
         self.planner = planner
+        self.tools = tools or []
 
-    async def handle(self, session: Session, user_query: str, instruction: str = "") -> str:
+    async def handle(self, session: Session, user_input: UserInput, instruction: str = "") -> str:
         ctx = PlanningContext(
             session_id=session.session_id,
-            user_query=user_query,
+            user_input=user_input,
             chat_history=session.chat_history,
-            tools=[],
+            tools=self.tools,
             sandbox=session.sandbox,
             instruction=instruction,
         )
