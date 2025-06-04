@@ -1,12 +1,10 @@
 """Event and action primitives shared between planner and agent."""
 
 from dataclasses import dataclass
-
+from typing import List
 
 @dataclass
 class Message:
-    """Simple chat message."""
-
     role: str
     content: str
 
@@ -18,7 +16,6 @@ class ToolUse:
 @dataclass
 class FinishAction:
     result: str
-
 
 @dataclass
 class TaskBegin:

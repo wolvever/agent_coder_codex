@@ -26,12 +26,12 @@ class Agent:
                 return tool
         return None
 
-    async def handle(self, session: Session, user_input: UserInput, instruction: str = "") -> str:
+    async def handle(self, session: Session, user_query: str, instruction: str = "") -> str:
         ctx = PlanningContext(
             session_id=session.session_id,
-            user_input=user_input,
+            user_query=user_query,
             chat_history=session.chat_history,
-            tools=self.tools,
+            tools=[],
             sandbox=session.sandbox,
             instruction=instruction,
         )
@@ -54,4 +54,3 @@ class Agent:
                     session.chat_history.append(tool_msg)
             ctx.chat_history = session.chat_history
             await asyncio.sleep(0)
-

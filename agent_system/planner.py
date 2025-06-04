@@ -6,6 +6,7 @@ from .input import UserInput
 from .sandbox import Sandbox
 from .tools import Tool
 
+
 @dataclass
 class PlanningContext:
     session_id: str
@@ -13,6 +14,7 @@ class PlanningContext:
     chat_history: List[Message]
     tools: List[Tool]
     sandbox: Sandbox
+
     instruction: str
     searched_chunks: Optional[str] = None
 
@@ -43,3 +45,4 @@ class ToolPlanner(Planner):
 
         # Otherwise ask to run the echo tool.
         return PlannerStep(actions=[ToolUse(tool_name="echo", instruction=ctx.user_input.text)])
+

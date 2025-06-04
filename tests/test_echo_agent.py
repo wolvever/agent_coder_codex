@@ -7,6 +7,7 @@ from agent_system.planner import EchoPlanner, ToolPlanner
 from agent_system.input import UserInput
 from agent_system.tools import EchoTool
 
+
 @pytest.mark.asyncio
 async def test_echo_agent():
     planner = EchoPlanner()

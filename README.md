@@ -18,6 +18,7 @@ This project contains a minimal framework for building coding agents.
 - **Sandbox**: Each session owns a sandbox directory that tools operate in.
 - **UserInput**: Represents user queries and uploaded files for multi-modal interaction.
 
+
 ## Example
 
 A basic echo agent is located in `examples/simple_agent.py`:

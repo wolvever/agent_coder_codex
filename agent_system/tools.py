@@ -44,3 +44,4 @@ class EchoTool(Tool):
 
     async def run(self, instruction: str, sandbox: Path) -> str:
         return instruction
+
