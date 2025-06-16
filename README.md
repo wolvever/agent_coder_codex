@@ -37,3 +37,25 @@ python examples/simple_agent.py use-tool
 ```
 
 will execute the `echo` tool and return its output.
+
+## Sandbox Daemon
+
+A small Go service is provided in `sandboxd/` that exposes an HTTP API for running
+commands and manipulating files inside a sandbox directory. The daemon can be
+started with:
+
+```bash
+go run ./sandboxd -root ./sandbox -addr :8080
+```
+
+Endpoints:
+
+- `POST /run` with JSON `{ "command": "echo hi" }` runs a shell command.
+- `POST /write` with JSON `{ "path": "file.txt", "data": "..." }` writes a
+  base64 encoded file.
+- `GET /read?path=foo` returns the file's base64 encoded contents.
+- `GET /list` lists all files relative to the sandbox root.
+
+This daemon is optional and is intended for scenarios where sandbox operations
+should be isolated in a separate process.
+
